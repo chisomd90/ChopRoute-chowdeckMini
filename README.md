@@ -64,7 +64,7 @@ These are designed in detail — see [`docs/system-flows.md`](./docs/system-flow
 
 | Layer | Choice |
 |---|---|
-| Frontend | React |
+| Frontend | React | Next.js
 | Backend | Node.js / Express |
 | Database | MongoDB |
 | Real-time | Socket.IO |
