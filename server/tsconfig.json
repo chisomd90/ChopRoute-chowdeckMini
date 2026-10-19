@@ -13,6 +13,6 @@
     "types": ["node"],
     "lib": ["ES2022"],
   },
-  "include": ["api/**/*.ts", "src/**/*.ts", "src/**/*.json"],
+  "include": ["api/**/*.ts", "src/**/*.ts", "src/**/*.json", "src/models/user.ts", "src/models/vendor.ts", "src/models/order.ts", "src/models/menuItem.ts"],
   "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"],
 }
