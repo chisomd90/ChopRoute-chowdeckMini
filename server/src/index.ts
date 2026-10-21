@@ -12,6 +12,9 @@ import {
   setupGlobalErrorHandlers,
 } from './middlewares/error.middleware.js'
 import authRoutes from "./routes/authRoute.js";
+import userRoutes from "./routes/userRoutes.js";
+import vendorRoutes from "./routes/vendorRoute.js";
+import adminRoutes from "./routes/adminRoute.js";
 import { createSessionMiddleware } from "./config/session.js";
 import { UserRole } from "./models/user.js";
 
@@ -123,7 +126,12 @@ app.get('/', (req: Request, res: Response) => {
 
 //Auth route
 app.use("/api/v1/auth", authRoutes);
-
+// Admin route
+app.use("/api/v1/admin", adminRoutes);
+// User route
+app.use("/api/v1/users", userRoutes);
+// Vendor route
+app.use("/api/v1/vendors", vendorRoutes);
 
 // Handle 404
 app.use(notFoundRoutes)

@@ -1,5 +1,3 @@
-// src/models/user.model.ts
-
 import mongoose, { Document, Model, Schema } from "mongoose";
 
 export type UserRole = "customer" | "vendor" | "admin";

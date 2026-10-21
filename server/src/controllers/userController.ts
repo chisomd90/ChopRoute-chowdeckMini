@@ -67,48 +67,9 @@ const updateMe = async (req: Request, res: Response): Promise<void> => {
   });
 };
 
-// ---------- Admin only ----------
-
-const listUsers = async (req: Request, res: Response): Promise<void> => {
-  const { role, page, limit } = listUsersQuerySchema.parse(req.query);
-  const filter = role ? { role } : {};
-
-  const [users, total] = await Promise.all([
-    User.find(filter)
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit),
-    User.countDocuments(filter),
-  ]);
-
-  return sendTsRestSuccess(res, 200, {
-    success: true,
-    message: "Users fetched.",
-    body: { users: users.map(toPublicUser), page, limit, total },
-  });
-};
-
-const getUserById = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
-
-  // Without this check, a malformed id throws a CastError and returns a 500.
-  if (!mongoose.isValidObjectId(id)) {
-    return sendTsRestError(res, 400, "Invalid user id.");
-  }
-
-  const user = await User.findById(id);
-  if (!user) {
-    return sendTsRestError(res, 404, "User not found.");
-  }
-
-  return sendTsRestSuccess(res, 200, {
-    success: true,
-    message: "User fetched.",
-    body: { user: toPublicUser(user) },
-  });
-};
 
 export const getMeController = tryCatchWrapper(getMe);
 export const updateMeController = tryCatchWrapper(updateMe);
-export const listUsersController = tryCatchWrapper(listUsers);
-export const getUserByIdController = tryCatchWrapper(getUserById);
+
+
+
