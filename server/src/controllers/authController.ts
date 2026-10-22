@@ -31,7 +31,7 @@ const register = async (req: Request, res: Response): Promise<void> => {
   const hashedPassword = await bcrypt.hash(validatedData.password, 10);
 
   const newUser = await User.create({
-    role: "customer",
+    role: validatedData.role,
     phoneNumber: validatedData.phoneNumber,
     email: validatedData.email,
     fullName: validatedData.fullName,
@@ -89,7 +89,6 @@ const login = async (req: Request, res: Response): Promise<void> => {
 };
 
 const logout = async (req: Request, res: Response): Promise<void> => {
-  // If no session exists, the user is already technically logged out
   if (!req.session || !req.session.userId) {
     return sendTsRestSuccess(res, 200, {
       success: true,

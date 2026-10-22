@@ -10,12 +10,17 @@ import {
   updateMenuItemController,
   upsertProfileController,
 } from "../controllers/vendorController.js";
+import {
+  loginController,
+  logoutController,
+  registerController,
+} from "../controllers/authController.js";
 
 const router = Router();
 
-// Every route here is vendor-only.
-router.use(verifySession, requireRole("vendor"));
 
+router.post("/register", registerController);
+router.post("/login", loginController);
 router.get("/me", getMyVendorController);
 router.put("/me", upsertProfileController);
 
@@ -26,5 +31,6 @@ router.delete("/me/menu/:itemId", deleteMenuItemController);
 
 router.post("/me/go-live", goLiveController);
 router.post("/me/verification", requestVerificationController);
+router.post("/logout", verifySession, logoutController);
 
 export default router;

@@ -11,7 +11,6 @@ import {
   notFoundRoutes,
   setupGlobalErrorHandlers,
 } from './middlewares/error.middleware.js'
-import authRoutes from "./routes/authRoute.js";
 import userRoutes from "./routes/userRoutes.js";
 import vendorRoutes from "./routes/vendorRoute.js";
 import adminRoutes from "./routes/adminRoute.js";
@@ -125,7 +124,7 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 //Auth route
-app.use("/api/v1/auth", authRoutes);
+// app.use("/api/v1/auth", authRoutes);
 // Admin route
 app.use("/api/v1/admin", adminRoutes);
 // User route

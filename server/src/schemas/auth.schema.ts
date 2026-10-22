@@ -16,6 +16,7 @@ export const RegisterSchema = z.object({
     .trim()
     .min(2, "Full name must be at least 2 characters long")
     .optional(),
+  role: z.enum(["customer", "vendor"]).default("customer"),
 });
 
 export const loginSchema = z.object({

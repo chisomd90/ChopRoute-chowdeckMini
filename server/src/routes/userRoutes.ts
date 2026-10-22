@@ -10,13 +10,21 @@ import {
   // getUserByIdController,
   // uploadAvatarController,
 } from "../controllers/userController.js";
+import {
+  loginController,
+  logoutController,
+  registerController,
+} from "../controllers/authController.js";
 
 const router = Router();
 
-router.use(verifySession, requireRole("customer"));
+// router.use(verifySession, requireRole("customer"));
 
 // Any role: customer, vendor, admin
-router.get("/me",  getMeController);
-router.patch("/me", updateMeController);
+router.post("/register", registerController);
+router.post("/login", loginController);
+router.get("/me", verifySession,  getMeController);
+router.patch("/me", verifySession, updateMeController);
+router.post("/logout", verifySession, logoutController);
 
 export default router;
