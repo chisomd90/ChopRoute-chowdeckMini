@@ -5,15 +5,17 @@ import logger, { logError } from './config/logger.js'
 import {env} from './config/keys.js'
 import cors from 'cors'
 import { globalLimiter } from "./middlewares/rateLimit.middleware.js";
-import createSessionMiddleware from "./config/session.js";
-
 import {
   appErrorHandler,
   createExpressLogger,
   notFoundRoutes,
   setupGlobalErrorHandlers,
 } from './middlewares/error.middleware.js'
-
+import userRoutes from "./routes/userRoutes.js";
+import vendorRoutes from "./routes/vendorRoute.js";
+import adminRoutes from "./routes/adminRoute.js";
+import { createSessionMiddleware } from "./config/session.js";
+import { UserRole } from "./models/user.js";
 
  const connectionStates: Record<number, string> = {
     0: 'disconnected',
@@ -34,7 +36,7 @@ declare global {
 declare module 'express-session' {
   interface SessionData {
     userId?: string
-    role?: string
+    role?: UserRole
   }
 }
 
@@ -121,10 +123,21 @@ app.get('/', (req: Request, res: Response) => {
   })
 })
 
+//Auth route
+// app.use("/api/v1/auth", authRoutes);
+// Admin route
+app.use("/api/v1/admin", adminRoutes);
+// User route
+app.use("/api/v1/users", userRoutes);
+// Vendor route
+app.use("/api/v1/vendors", vendorRoutes);
+
 // Handle 404
 app.use(notFoundRoutes)
 // Global error handler
 app.use(appErrorHandler)
+
+
 
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000

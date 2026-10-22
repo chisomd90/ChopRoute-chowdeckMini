@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, RequestHandler } from "express";
 
-const tryCatchWrapper = (fn: Function) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+const tryCatchWrapper = (fn: RequestHandler): RequestHandler => {
+  return async (req, res, next) => {
     try {
       await fn(req, res, next);
     } catch (error) {

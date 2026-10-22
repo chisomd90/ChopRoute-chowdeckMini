@@ -7,7 +7,6 @@ import { sendTsRestError } from '../lib/responseHandler.js'
 
 const pinoHttp = pinoHttpModule.default || pinoHttpModule
 
-// Determine if we're in development mode
 const isDev = env.NODE_ENV === 'development'
 
 export class ErrorResponse extends Error {

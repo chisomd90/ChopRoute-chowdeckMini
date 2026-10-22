@@ -13,9 +13,8 @@ const createSessionStore = () => {
     mongoUrl: env.MONGO_URI,
     dbName: env.DATABASE_NAME,
     collectionName: 'sessions',
-    touchAfter: 24 * 3600, // Lazy session update - only update once per day unless data changes
-    autoRemove: 'native', // Use MongoDB TTL for session cleanup
-    stringify: false, // Store as objects instead of strings for better performance
+    touchAfter: 24 * 3600,
+    autoRemove: 'native',
   })
 }
 
@@ -23,17 +22,17 @@ const createSessionStore = () => {
 export const createSessionMiddleware = () => {
   return session({
     secret: env.SESSION_SECRET,
-    name: '_chopRouteSessionId', // Custom cookie name to avoid default 'connect.sid'
-    resave: false, // Don't save session if unmodified
-    saveUninitialized: false, // Don't create session until something stored
+    name: '_chopRouteSessionId',
+    resave: false,
+    saveUninitialized: false,
     store: createSessionStore(),
     cookie: {
       maxAge: SESSION_MAX_AGE,
-      httpOnly: true, // Prevent XSS attacks
-      secure: env.NODE_ENV === 'production', // HTTPS only in production
-      sameSite: 'lax', // CSRF protection (None required for cross-site cookies)
+      httpOnly: true,
+      secure: env.NODE_ENV === 'production',
+      sameSite: 'lax',
     },
-    rolling: true, // Refresh expiration on every response
+    rolling: true,
   })
 }
 
