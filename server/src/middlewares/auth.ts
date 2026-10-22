@@ -25,10 +25,10 @@ export const verifySession = (
     );
     return;
   }
-  // req.user = {
-  //   id: req.session.userId,
-  //   role: req.session.role,
-  // };
+  req.user = {
+    id: req.session.userId,
+    role: req.session.role,
+  };
   next();
 };
 
