@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-// import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import tryCatchWrapper from "../lib/tryCatchWrapper.js";
 import { sendTsRestError, sendTsRestSuccess } from "../lib/responseHandler.js";
@@ -68,6 +67,17 @@ const login = async (req: Request, res: Response): Promise<void> => {
 
   if (!passwordValid) {
     return sendTsRestError(res, 401, "Invalid phone number or password.");
+  }
+
+  const isVendorRoute = req.originalUrl.includes("vendor");
+  const expectedRole = isVendorRoute ? "vendor" : "customer";
+
+  if (user.role !== expectedRole) {
+    return sendTsRestError(
+      res,
+      403,
+      `Access denied. This endpoint is strictly for ${expectedRole} accounts.`,
+    );
   }
 
   req.session.userId = user._id.toString();

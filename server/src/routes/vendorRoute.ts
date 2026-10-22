@@ -18,9 +18,17 @@ import {
 
 const router = Router();
 
-
+// --- PUBLIC PATHS ---
 router.post("/register", registerController);
 router.post("/login", loginController);
+
+
+router.use(verifySession);
+router.use(requireRole("vendor"));
+
+
+router.post("/register", registerController);
+router.post("/login",   loginController);
 router.get("/me", getMyVendorController);
 router.put("/me", upsertProfileController);
 
